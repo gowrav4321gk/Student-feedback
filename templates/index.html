@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Student Feedback Analysis System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Hero Section -->
+    <div class="row align-items-center mb-5 g-4">
+        <div class="col-lg-7">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-10 text-primary fw-semibold small mb-3">
+                <i class="bi bi-mortarboard-fill"></i> Academic Quality Enhancement Platform
+            </div>
+            <h1 class="display-5 fw-extrabold text-navy mb-3">
+                Student Feedback <br><span class="text-primary">Analysis System</span>
+            </h1>
+            <p class="lead text-secondary mb-4">
+                A full-stack Python analytics portal designed to collect 100% anonymous student course evaluations, analyze rating distributions with Pandas and NumPy, and generate interactive dashboards with Matplotlib.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+                <a href="{{ url_for('feedback.submit_feedback') }}" class="btn btn-primary btn-lg shadow-sm">
+                    <i class="bi bi-pencil-square me-2"></i> Submit Anonymous Feedback
+                </a>
+                <a href="{{ url_for('dashboard.dashboard_view') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-speedometer2 me-2"></i> View Analytics Dashboard
+                </a>
+                {% if total_feedbacks == 0 %}
+                <a href="{{ url_for('main.seed_demo') }}" class="btn btn-outline-secondary btn-lg" title="Populate realistic dummy data for evaluation">
+                    <i class="bi bi-database-fill-gear me-2"></i> Seed Demo Data
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="custom-card p-4 bg-white shadow-sm border">
+                <h5 class="fw-bold text-navy mb-3 d-flex align-items-center gap-2">
+                    <i class="bi bi-graph-up-arrow text-primary"></i> Academic Pulse Overview
+                </h5>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="p-3 rounded bg-light text-center border">
+                            <div class="kpi-value text-primary">{{ total_feedbacks }}</div>
+                            <div class="small text-muted fw-semibold">Feedbacks Recorded</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded bg-light text-center border">
+                            <div class="kpi-value text-success">
+                                {{ "%.2f"|format(kpis.overall_average) }} <span class="fs-6 text-muted">/ 5.0</span>
+                            </div>
+                            <div class="small text-muted fw-semibold">Campus Average</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded bg-light text-center border">
+                            <div class="kpi-value text-dark">{{ total_faculty }}</div>
+                            <div class="small text-muted fw-semibold">Faculty Evaluated</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded bg-light text-center border">
+                            <div class="kpi-value text-dark">{{ total_courses }}</div>
+                            <div class="small text-muted fw-semibold">Active Courses</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-top">
+                    <div class="d-flex justify-content-between align-items-center small mb-1">
+                        <span class="text-secondary fw-semibold">Student Satisfaction Benchmark</span>
+                        <span class="fw-bold text-success">{{ kpis.positive_sentiment_pct }}% Satisfied</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ kpis.positive_sentiment_pct }}%;" aria-valuenow="{{ kpis.positive_sentiment_pct }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Features Grid -->
+    <div class="row g-4 mb-5">
+        <div class="col-12 text-center mb-2">
+            <h2 class="fw-bold text-navy">Why This System?</h2>
+            <p class="text-muted">Built specifically for academic rigor, transparent student voice, and institutional improvement.</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="custom-card p-4 h-100">
+                <div class="kpi-icon mb-3 bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-incognito"></i>
+                </div>
+                <h4 class="h5 fw-bold text-navy mb-2">100% Student Anonymity</h4>
+                <p class="text-muted small">
+                    Zero student IDs, roll numbers, or personal identifying information is tracked. Students provide candid, constructive feedback without fear of bias or retribution.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="custom-card p-4 h-100">
+                <div class="kpi-icon mb-3 bg-success bg-opacity-10 text-success">
+                    <i class="bi bi-pie-chart-fill"></i>
+                </div>
+                <h4 class="h5 fw-bold text-navy mb-2">Multi-Dimensional Analysis</h4>
+                <p class="text-muted small">
+                    Evaluates faculty across 5 distinct academic criteria: Concept Clarity, Syllabus Coverage, Punctuality & Communication, Doubt Solving Mentorship, and Lab Guidance.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="custom-card p-4 h-100">
+                <div class="kpi-icon mb-3 bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-cpu-fill"></i>
+                </div>
+                <h4 class="h5 fw-bold text-navy mb-2">Pandas, NumPy & Matplotlib</h4>
+                <p class="text-muted small">
+                    Backend statistical computations leverage NumPy for standard deviations and distributions, Pandas for grouped aggregations, and Matplotlib for publication-ready visual charts.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evaluation Banner -->
+    <div class="privacy-banner d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 shadow-sm">
+        <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-award-fill text-primary fs-1"></i>
+            <div>
+                <h5 class="fw-bold text-navy mb-1">College Project Evaluation Ready</h5>
+                <p class="text-muted small mb-0">
+                    Includes automated unit tests with pytest, MySQL relational schema, sample database seeder, and viva presentation documentation.
+                </p>
+            </div>
+        </div>
+        <a href="{{ url_for('main.about') }}" class="btn btn-outline-primary text-nowrap">
+            <i class="bi bi-book-half me-1"></i> Read Viva Guide
+        </a>
+    </div>
+
+</div>
+{% endblock %}

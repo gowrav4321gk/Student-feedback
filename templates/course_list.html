@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Course Directory - Student Feedback Analysis System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 fw-extrabold text-navy mb-1">Academic Courses Directory</h1>
+            <p class="text-muted small mb-0">Explore course feedback ratings, curriculum quality, and student satisfaction.</p>
+        </div>
+        <a href="{{ url_for('feedback.submit_feedback') }}" class="btn btn-sm btn-primary">
+            <i class="bi bi-pencil-square me-1"></i> Give Feedback
+        </a>
+    </div>
+
+    <!-- Courses Table Card -->
+    <div class="custom-card">
+        <div class="table-responsive">
+            <table class="table table-hover table-custom align-middle">
+                <thead>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Department</th>
+                        <th>Semester</th>
+                        <th>Credits</th>
+                        <th>Lead Instructor</th>
+                        <th>Reviews</th>
+                        <th>Average Rating</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr>
+                        <td>
+                            <span class="badge bg-primary bg-opacity-10 text-primary fw-bold fs-6">
+                                {{ course.code }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="fw-bold text-navy">{{ course.name }}</div>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">{{ course.department.code }}</span>
+                        </td>
+                        <td>Semester {{ course.semester }}</td>
+                        <td>{{ course.credits }} Credits</td>
+                        <td>
+                            {% if course.instructor %}
+                                <a href="{{ url_for('faculty.faculty_detail', faculty_id=course.instructor.id) }}" class="text-decoration-none fw-semibold">
+                                    {{ course.instructor.name }}
+                                </a>
+                            {% else %}
+                                <span class="text-muted">Unassigned</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">{{ course.get_feedback_count() }}</span>
+                        </td>
+                        <td>
+                            <span class="badge {{ course.get_average_rating()|rating_badge }} fs-6">
+                                ★ {{ "%.2f"|format(course.get_average_rating()) }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('courses.course_detail', course_id=course.id) }}" class="btn btn-sm btn-outline-primary">
+                                Details <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center text-muted py-4">No courses found in database.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

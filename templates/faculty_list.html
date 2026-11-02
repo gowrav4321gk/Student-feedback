@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Faculty Directory - Student Feedback Analysis System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 fw-extrabold text-navy mb-1">Faculty Performance Directory</h1>
+            <p class="text-muted small mb-0">Browse faculty members, evaluations, and student satisfaction rankings.</p>
+        </div>
+        <a href="{{ url_for('feedback.submit_feedback') }}" class="btn btn-sm btn-primary">
+            <i class="bi bi-pencil-square me-1"></i> Submit Evaluation
+        </a>
+    </div>
+
+    <!-- Faculty Cards Grid -->
+    <div class="row g-4">
+        {% for faculty in faculty_list %}
+        <div class="col-md-6 col-lg-4">
+            <div class="custom-card h-100 p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <!-- Avatar and Title -->
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 52px; height: 52px; flex-shrink: 0;">
+                            {{ faculty.name.split()[-1][0] }}
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-navy mb-0">{{ faculty.name }}</h5>
+                            <span class="text-muted small d-block">{{ faculty.designation }}</span>
+                            <span class="badge bg-light text-dark border mt-1">{{ faculty.department.code }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="bg-light p-3 rounded mb-3">
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Experience:</span>
+                            <span class="fw-semibold text-dark">{{ faculty.experience_years }} Years</span>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span>Email:</span>
+                            <span class="fw-semibold text-dark">{{ faculty.email }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>Total Feedbacks:</span>
+                            <span class="fw-bold text-primary">{{ faculty.get_feedback_count() }} Submissions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Score and Action -->
+                <div class="pt-2 border-top d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small text-muted">Overall Rating</div>
+                        <div class="d-flex align-items-center gap-1">
+                            <span class="badge {{ faculty.get_average_rating()|rating_badge }} fs-6">
+                                ★ {{ "%.2f"|format(faculty.get_average_rating()) }}
+                            </span>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('faculty.faculty_detail', faculty_id=faculty.id) }}" class="btn btn-sm btn-outline-primary">
+                        View Analytics <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center py-5">
+            <div class="text-muted fs-5">No faculty members found.</div>
+            <a href="{{ url_for('main.seed_demo') }}" class="btn btn-primary mt-3">Seed Demo Faculty</a>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

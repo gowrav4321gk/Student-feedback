@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Feedback - Student Feedback Analysis System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+
+            <!-- Title & Privacy Guarantee Header -->
+            <div class="text-center mb-4">
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold mb-2">
+                    <i class="bi bi-shield-check"></i> Official Student Course Evaluation
+                </span>
+                <h2 class="fw-extrabold text-navy">Submit Anonymous Feedback</h2>
+                <p class="text-muted">
+                    Your candid feedback helps enhance classroom instruction, course structure, and academic experience.
+                </p>
+            </div>
+
+            <!-- Privacy Note Box -->
+            <div class="privacy-banner mb-4 d-flex align-items-center gap-3">
+                <i class="bi bi-incognito text-primary fs-2 flex-shrink-0"></i>
+                <div class="small">
+                    <strong class="text-navy d-block">100% Anonymous & Confidential</strong>
+                    <span>No student ID, roll number, or email address is collected or associated with this submission. Faculty and administrators can only view aggregated analytical trends.</span>
+                </div>
+            </div>
+
+            <!-- Main Form Card -->
+            <div class="custom-card p-4 p-md-5 mb-5">
+                <form method="POST" action="{{ url_for('feedback.submit_feedback') }}" novalidate id="feedbackForm">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Section 1: Academic Course Details -->
+                    <h5 class="fw-bold text-navy mb-3 pb-2 border-bottom d-flex align-items-center gap-2">
+                        <i class="bi bi-collection-fill text-primary"></i> 1. Course & Faculty Details
+                    </h5>
+
+                    <div class="row g-3 mb-4">
+                        <!-- Department -->
+                        <div class="col-md-6">
+                            <label for="department_id" class="form-label fw-semibold text-dark">
+                                Department <span class="text-danger">*</span>
+                            </label>
+                            {{ form.department_id(class="form-select" + (" is-invalid" if form.department_id.errors else "")) }}
+                            {% for error in form.department_id.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Course -->
+                        <div class="col-md-6">
+                            <label for="course_id" class="form-label fw-semibold text-dark">
+                                Course / Subject <span class="text-danger">*</span>
+                            </label>
+                            {{ form.course_id(class="form-select" + (" is-invalid" if form.course_id.errors else "")) }}
+                            {% for error in form.course_id.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Faculty Member -->
+                        <div class="col-md-6">
+                            <label for="faculty_id" class="form-label fw-semibold text-dark">
+                                Faculty Instructor <span class="text-danger">*</span>
+                            </label>
+                            {{ form.faculty_id(class="form-select" + (" is-invalid" if form.faculty_id.errors else "")) }}
+                            {% for error in form.faculty_id.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Semester -->
+                        <div class="col-md-3">
+                            <label for="semester" class="form-label fw-semibold text-dark">Semester <span class="text-danger">*</span></label>
+                            {{ form.semester(class="form-select") }}
+                        </div>
+
+                        <!-- Academic Year -->
+                        <div class="col-md-3">
+                            <label for="academic_year" class="form-label fw-semibold text-dark">Academic Year <span class="text-danger">*</span></label>
+                            {{ form.academic_year(class="form-select") }}
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Numeric Evaluation Ratings -->
+                    <h5 class="fw-bold text-navy mb-3 pb-2 border-bottom d-flex align-items-center gap-2">
+                        <i class="bi bi-star-half text-primary"></i> 2. Performance Evaluation Ratings
+                    </h5>
+                    <p class="text-muted small mb-3">
+                        Click on the stars to rate each dimension from 1 (Poor) to 5 (Outstanding).
+                    </p>
+
+                    <!-- Criteria 1: Teaching Quality -->
+                    <div class="star-rating-box">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <div class="star-label-text">1. Teaching Quality & Concept Clarity</div>
+                                <div class="star-desc">Depth of explanations, use of real-world illustrations, and overall lecture clarity.</div>
+                            </div>
+                            <span class="rating-desc-text badge bg-primary bg-opacity-10 text-primary fw-semibold">5 - Excellent</span>
+                        </div>
+                        <div class="star-rating-container" data-field="teaching_quality">
+                            <span class="star-interactive active" data-value="1">★</span>
+                            <span class="star-interactive active" data-value="2">★</span>
+                            <span class="star-interactive active" data-value="3">★</span>
+                            <span class="star-interactive active" data-value="4">★</span>
+                            <span class="star-interactive active" data-value="5">★</span>
+                        </div>
+                        <input type="number" name="teaching_quality" id="teaching_quality" value="5" min="1" max="5" class="d-none">
+                        {% for error in form.teaching_quality.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Criteria 2: Course Content -->
+                    <div class="star-rating-box">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <div class="star-label-text">2. Course Content & Syllabus Coverage</div>
+                                <div class="star-desc">Relevance of curriculum, topic pacing, and provision of study materials.</div>
+                            </div>
+                            <span class="rating-desc-text badge bg-primary bg-opacity-10 text-primary fw-semibold">5 - Excellent</span>
+                        </div>
+                        <div class="star-rating-container" data-field="course_content">
+                            <span class="star-interactive active" data-value="1">★</span>
+                            <span class="star-interactive active" data-value="2">★</span>
+                            <span class="star-interactive active" data-value="3">★</span>
+                            <span class="star-interactive active" data-value="4">★</span>
+                            <span class="star-interactive active" data-value="5">★</span>
+                        </div>
+                        <input type="number" name="course_content" id="course_content" value="5" min="1" max="5" class="d-none">
+                        {% for error in form.course_content.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Criteria 3: Punctuality & Communication -->
+                    <div class="star-rating-box">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <div class="star-label-text">3. Punctuality, Regularity & Communication</div>
+                                <div class="star-desc">Timely conduct of classes, clear announcements, and structured schedules.</div>
+                            </div>
+                            <span class="rating-desc-text badge bg-primary bg-opacity-10 text-primary fw-semibold">5 - Excellent</span>
+                        </div>
+                        <div class="star-rating-container" data-field="punctuality">
+                            <span class="star-interactive active" data-value="1">★</span>
+                            <span class="star-interactive active" data-value="2">★</span>
+                            <span class="star-interactive active" data-value="3">★</span>
+                            <span class="star-interactive active" data-value="4">★</span>
+                            <span class="star-interactive active" data-value="5">★</span>
+                        </div>
+                        <input type="number" name="punctuality" id="punctuality" value="5" min="1" max="5" class="d-none">
+                        {% for error in form.punctuality.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Criteria 4: Doubt Solving -->
+                    <div class="star-rating-box">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <div class="star-label-text">4. Doubt Solving & Mentorship</div>
+                                <div class="star-desc">Approachability, patience in answering questions, and availability outside lecture hours.</div>
+                            </div>
+                            <span class="rating-desc-text badge bg-primary bg-opacity-10 text-primary fw-semibold">5 - Excellent</span>
+                        </div>
+                        <div class="star-rating-container" data-field="doubt_solving">
+                            <span class="star-interactive active" data-value="1">★</span>
+                            <span class="star-interactive active" data-value="2">★</span>
+                            <span class="star-interactive active" data-value="3">★</span>
+                            <span class="star-interactive active" data-value="4">★</span>
+                            <span class="star-interactive active" data-value="5">★</span>
+                        </div>
+                        <input type="number" name="doubt_solving" id="doubt_solving" value="5" min="1" max="5" class="d-none">
+                        {% for error in form.doubt_solving.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Criteria 5: Practical Guidance -->
+                    <div class="star-rating-box">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <div class="star-label-text">5. Practical Guidance & Evaluation Fairness</div>
+                                <div class="star-desc">Hands-on laboratory assistance, objective grading, and constructive assessment feedback.</div>
+                            </div>
+                            <span class="rating-desc-text badge bg-primary bg-opacity-10 text-primary fw-semibold">5 - Excellent</span>
+                        </div>
+                        <div class="star-rating-container" data-field="lab_work_fairness">
+                            <span class="star-interactive active" data-value="1">★</span>
+                            <span class="star-interactive active" data-value="2">★</span>
+                            <span class="star-interactive active" data-value="3">★</span>
+                            <span class="star-interactive active" data-value="4">★</span>
+                            <span class="star-interactive active" data-value="5">★</span>
+                        </div>
+                        <input type="number" name="lab_work_fairness" id="lab_work_fairness" value="5" min="1" max="5" class="d-none">
+                        {% for error in form.lab_work_fairness.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Section 3: Qualitative Written Comments -->
+                    <h5 class="fw-bold text-navy mt-4 mb-3 pb-2 border-bottom d-flex align-items-center gap-2">
+                        <i class="bi bi-chat-left-text-fill text-primary"></i> 3. Written Comments & Suggestions
+                    </h5>
+
+                    <!-- Positive Comments -->
+                    <div class="mb-3">
+                        <label for="comments_positive" class="form-label fw-semibold text-dark">
+                            Key Strengths & What Went Well <span class="text-muted fw-normal">(Optional)</span>
+                        </label>
+                        {{ form.comments_positive(class="form-control", rows="3", placeholder="e.g. Explains algorithms with very intuitive diagrams; always clarifies doubts after class...", maxlength="1000") }}
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <div class="form-text small">Highlight positive teaching methods and strengths.</div>
+                            <div id="comments_positive_counter" class="small text-muted">0 / 1000 characters</div>
+                        </div>
+                        {% for error in form.comments_positive.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Improvement Comments -->
+                    <div class="mb-4">
+                        <label for="comments_improvement" class="form-label fw-semibold text-dark">
+                            Constructive Suggestions for Improvement <span class="text-muted fw-normal">(Optional)</span>
+                        </label>
+                        {{ form.comments_improvement(class="form-control", rows="3", placeholder="e.g. Could provide additional practice problem sets for recursion; return lab scores earlier...", maxlength="1000") }}
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <div class="form-text small">Provide actionable ideas to enhance the teaching-learning process.</div>
+                            <div id="comments_improvement_counter" class="small text-muted">0 / 1000 characters</div>
+                        </div>
+                        {% for error in form.comments_improvement.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2 pt-2">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                            <i class="bi bi-send-fill me-2"></i> Submit Anonymous Feedback
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}About & Viva Documentation - Student Feedback Analysis System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold mb-2">
+            <i class="bi bi-mortarboard-fill"></i> B.Tech CSE Academic Project
+        </span>
+        <h1 class="display-6 fw-extrabold text-navy">About the System & Project Documentation</h1>
+        <p class="text-muted lead fs-6">
+            Technical architecture, statistical analysis model, and viva voce evaluation guide.
+        </p>
+    </div>
+
+    <!-- Section 1: Project Overview & Objectives -->
+    <div class="custom-card p-4 p-md-5 mb-4">
+        <h3 class="fw-bold text-navy mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-bullseye text-primary"></i> 1. Problem Statement & Project Objectives
+        </h3>
+        <p class="text-secondary">
+            Traditional paper-based or manual student feedback collection often suffers from low participation, fear of academic retribution due to lack of anonymity, slow aggregation cycles, and subjective evaluation.
+        </p>
+        <p class="text-secondary">
+            The <strong>Student Feedback Analysis System</strong> provides an automated, full-stack, data-driven web platform that collects 100% anonymous feedback across 5 academic dimensions, aggregates numeric distributions using <strong>NumPy</strong> and <strong>Pandas</strong>, and visualizes institutional trends using <strong>Matplotlib</strong>.
+        </p>
+        <div class="row g-3 mt-2">
+            <div class="col-md-4">
+                <div class="p-3 rounded bg-light border">
+                    <strong class="text-navy d-block mb-1"><i class="bi bi-shield-lock text-primary me-1"></i> 100% Anonymity</strong>
+                    <span class="text-muted small">No roll numbers, student emails, or IP addresses are stored or linked to feedback.</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 rounded bg-light border">
+                    <strong class="text-navy d-block mb-1"><i class="bi bi-calculator text-success me-1"></i> Vectorized Analytics</strong>
+                    <span class="text-muted small">Pandas and NumPy compute rating distributions, medians, and standard deviations.</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 rounded bg-light border">
+                    <strong class="text-navy d-block mb-1"><i class="bi bi-file-earmark-bar-graph text-info me-1"></i> Visual Reporting</strong>
+                    <span class="text-muted small">Matplotlib dynamically renders server-side chart graphics directly to Base64 strings.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Mathematical Analysis Formulas -->
+    <div class="custom-card p-4 p-md-5 mb-4">
+        <h3 class="fw-bold text-navy mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-calculator-fill text-primary"></i> 2. Mathematical & Statistical Model
+        </h3>
+        <p class="text-secondary">
+            The analytics engine implements standard statistical algorithms to evaluate feedback objectivity and identify outliers:
+        </p>
+
+        <div class="row g-4 mt-1">
+            <div class="col-md-4">
+                <div class="p-4 rounded bg-light border h-100">
+                    <h6 class="fw-bold text-navy">1. Arithmetic Mean ($\mu$)</h6>
+                    <p class="text-muted small">Calculates average score across the 5 evaluation criteria:</p>
+                    <div class="p-2 bg-white rounded border text-center font-monospace fw-bold text-primary mb-2">
+                        $$\bar{x} = \frac{1}{k}\sum_{i=1}^k x_i$$
+                    </div>
+                    <span class="text-muted small">Where $k=5$ (Teaching, Content, Punctuality, Doubt Solving, Practical Guidance).</span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 rounded bg-light border h-100">
+                    <h6 class="fw-bold text-navy">2. Sample Standard Deviation ($\sigma$)</h6>
+                    <p class="text-muted small">Measures consensus or polarity among student evaluations:</p>
+                    <div class="p-2 bg-white rounded border text-center font-monospace fw-bold text-primary mb-2">
+                        $$s = \sqrt{\frac{1}{N - 1}\sum_{i=1}^N (R_i - \mu)^2}$$
+                    </div>
+                    <span class="text-muted small">Computed via <code>numpy.std()</code>. A lower value denotes high student consensus.</span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 rounded bg-light border h-100">
+                    <h6 class="fw-bold text-navy">3. Satisfaction Index (%)</h6>
+                    <p class="text-muted small">Proportion of student evaluations meeting benchmark ($\ge 4.0\star$):</p>
+                    <div class="p-2 bg-white rounded border text-center font-monospace fw-bold text-primary mb-2">
+                        $$\text{Satisfaction} = \left(\frac{N_{\ge 4.0}}{N_{\text{total}}}\right) \times 100$$
+                    </div>
+                    <span class="text-muted small">Used by academic audit boards for accreditation and faculty appraisal.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Technology Architecture -->
+    <div class="custom-card p-4 p-md-5 mb-4">
+        <h3 class="fw-bold text-navy mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-layers-fill text-primary"></i> 3. Technical Architecture & Stack
+        </h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-custom align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Component</th>
+                        <th style="width: 30%;">Technology Used</th>
+                        <th>Role in This Application</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold text-navy">Frontend Presentation</td>
+                        <td>HTML5, CSS3, Bootstrap 5, JavaScript</td>
+                        <td>Responsive layout, interactive star ratings, cascading dropdowns, accessible forms.</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-navy">Templating Engine</td>
+                        <td>Jinja2</td>
+                        <td>Dynamic server-side rendering, layout inheritance (<code>base.html</code>), custom filters.</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-navy">Backend Framework</td>
+                        <td>Python 3 & Flask</td>
+                        <td>Modular application factory, Blueprints routing, session and error handling.</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-navy">Form Validation</td>
+                        <td>Flask-WTF & WTForms</td>
+                        <td>CSRF token defense, numerical range checks (1-5), input sanitization.</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-navy">ORM & Database</td>
+                        <td>Flask-SQLAlchemy & MySQL</td>
+                        <td>Relational data modeling, foreign key constraints, connection pooling via PyMySQL.</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-navy">Data Analysis</td>
+                        <td>Pandas & NumPy</td>
+                        <td>DataFrame grouping, vector aggregations, statistical summaries, CSV exports.</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-navy">Visualizations</td>
+                        <td>Matplotlib (Headless Agg backend)</td>
+                        <td>Publication-quality charts converted in-memory to Base64 strings for clean HTML rendering.</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-navy">Testing Suite</td>
+                        <td>pytest</td>
+                        <td>Automated unit tests covering models, validation rules, analytics math, and HTTP routes.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section 4: Viva Voce Preparation Guide -->
+    <div class="custom-card p-4 p-md-5">
+        <h3 class="fw-bold text-navy mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-question-diamond-fill text-primary"></i> 4. Viva Voce & Evaluation FAQ
+        </h3>
+        <p class="text-secondary mb-4">
+            Common questions asked by examiners during first-year engineering project defense:
+        </p>
+
+        <div class="accordion" id="vivaAccordion">
+            <!-- Q1 -->
+            <div class="accordion-item mb-2 border rounded">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed fw-bold text-navy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Q1: Why did you choose Flask instead of Django for this project?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#vivaAccordion">
+                    <div class="accordion-body text-secondary small">
+                        Flask is a lightweight, explicit micro-framework that gives complete architectural control. For an academic data analysis project, Flask allows seamless integration with Pandas and Matplotlib without the overhead of Django's heavy boilerplate. Its Blueprint modularity keeps code simple and easy to explain.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="accordion-item mb-2 border rounded">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed fw-bold text-navy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Q2: How does the system guarantee 100% student anonymity?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#vivaAccordion">
+                    <div class="accordion-body text-secondary small">
+                        By architectural design, the <code>feedback</code> database table contains zero personal identifying columns: no student ID, roll number, registration number, student name, email, or client IP address. All feedback entries are completely decoupled from individual user profiles.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="accordion-item mb-2 border rounded">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed fw-bold text-navy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Q3: Why is Matplotlib configured with matplotlib.use("Agg")?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#vivaAccordion">
+                    <div class="accordion-body text-secondary small">
+                        By default, Matplotlib attempts to use graphical display backends (like Tkinter or Qt). In a web server or Linux environment without an X11 graphical window display, this crashes the server. Setting <code>matplotlib.use("Agg")</code> tells Matplotlib to run in a headless rasterizer mode, generating PNGs directly in-memory (using <code>io.BytesIO</code>) and encoding them to Base64 strings for instant HTML rendering without disk I/O bottlenecks.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="accordion-item mb-2 border rounded">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed fw-bold text-navy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Q4: How do you prevent SQL Injection and Cross-Site Request Forgery (CSRF)?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#vivaAccordion">
+                    <div class="accordion-body text-secondary small">
+                        <strong>SQL Injection Defense:</strong> Handled by SQLAlchemy ORM, which automatically uses parameterized queries and prepared statements rather than raw string concatenation.<br>
+                        <strong>CSRF Defense:</strong> Handled by Flask-WTF, which injects cryptographically signed one-time CSRF tokens (<code>&#123;&#123; form.hidden_tag() &#125;&#125;</code>) into every POST form and verifies them before processing.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="accordion-item border rounded">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed fw-bold text-navy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Q5: How does Pandas improve efficiency over manual SQL loops?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#vivaAccordion">
+                    <div class="accordion-body text-secondary small">
+                        Pandas utilizes underlying C-optimized memory buffers (through NumPy). Operations like <code>df.groupby('faculty_name')['overall_rating'].agg(['mean', 'count'])</code> perform vectorized aggregations simultaneously across millions of rows in milliseconds, eliminating slow Python for-loops and complex nested SQL join queries.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

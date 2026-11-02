@@ -279,3 +279,14 @@ Denotes the percentage of evaluations that meet or exceed the college excellence
 - [x] Database seeder with 140+ realistic feedback records.
 - [x] Responsive modern dashboard with Navy/Blue academic theme, cards, and subtle shadows.
 - [x] In-app About & Viva Documentation page.
+
+---
+
+## Deployment (Render – free)
+
+GitHub Pages only hosts static files, so it cannot run this Flask app (it just shows the README).
+Deploy to Render instead:
+
+1. Push this folder's contents to the **root** of your GitHub repo (`render.yaml` must be at the root).
+2. Go to https://render.com → **New → Blueprint** → select the repo → **Apply**.
+3. Wait for the build; your app is live at `https://student-feedback.onrender.com`.

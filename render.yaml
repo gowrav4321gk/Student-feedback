@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: student-feedback
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python seed.py
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DB_TYPE
+        value: sqlite
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
